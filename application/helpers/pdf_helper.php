@@ -99,8 +99,10 @@ function generate_invoice_pdf($invoice_id, $stream = true, $invoice_template = n
     $html = $CI->load->view('invoice_templates/pdf/' . $invoice_template, $data, true);
 
     $CI->load->helper('mpdf');
-    return pdf_create($html, trans('invoice') . '_' . str_replace(array('\\', '/'), '_', $invoice->invoice_number),
+    // custom-valentino-start
+    return pdf_create($html, lang('invoice') . ' ' . str_replace('', '', $invoice->user_name) . ' #' . str_replace(array('\\', '/'), '_', $invoice->invoice_number) . ' ' . str_replace('/', '.', date_from_mysql($invoice->invoice_date_created, TRUE)),
         $stream, $invoice->invoice_password, true, $is_guest, $include_zugferd, $associatedFiles);
+    // custom-valentino-end
 }
 
 function generate_invoice_sumex($invoice_id, $stream = true, $client = false)

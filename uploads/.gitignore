@@ -4,3 +4,8 @@
 !import
 !temp
 !.gitignore
+
+# custom-valentino-start
+!valentino.png
+!valentino-login.png
+# custom-valentino-end

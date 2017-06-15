@@ -3,3 +3,8 @@
 !InvoicePlane - overdue.php
 !InvoicePlane - paid.php
 !.gitignore
+
+# custom-valentino-start
+!valentino.php
+!valentino-no-bollo.php
+# custom-valentino-end
