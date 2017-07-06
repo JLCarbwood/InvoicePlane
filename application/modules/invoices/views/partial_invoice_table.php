@@ -9,7 +9,10 @@
             <th><?php _trans('due_date'); ?></th>
             <th><?php _trans('client_name'); ?></th>
             <!-- custom-valentino-start -->
-            <th><?php echo "Marca da bollo"; ?></th>
+            <?php global $marca_da_bollo;
+            if ($marca_da_bollo) { ?>
+              <th><?php echo "Marca da bollo"; ?></th>
+            <?php } ?>
             <!-- custom-valentino-end -->
             <th style="text-align: right;"><?php _trans('amount'); ?></th>
             <th style="text-align: right;"><?php _trans('balance'); ?></th>
@@ -70,18 +73,20 @@
                 </td>
 
                 <!-- custom-valentino-start -->
-                <?php $CI = &get_instance();
-                $CI->load->model('custom_fields/mdl_custom_fields');
-                $custom_fields = array(
-                  'invoice' => $CI->mdl_custom_fields->get_values_for_fields('mdl_invoice_custom', $invoice->invoice_id),
-                ); ?>
-                <td>
-                    <?php if($custom_fields['invoice']['ID marca da bollo']) {
-                      echo nl2br($custom_fields['invoice']['ID marca da bollo']);
-                    } else {
-                      echo "Non supera € 77,47";
-                    } ?>
-                </td>
+                <?php if ($marca_da_bollo) {
+                  $CI = &get_instance();
+                  $CI->load->model('custom_fields/mdl_custom_fields');
+                  $custom_fields = array(
+                    'invoice' => $CI->mdl_custom_fields->get_values_for_fields('mdl_invoice_custom', $invoice->invoice_id),
+                  ); ?>
+                  <td>
+                      <?php if($custom_fields['invoice']['ID marca da bollo']) {
+                        echo nl2br($custom_fields['invoice']['ID marca da bollo']);
+                      } else {
+                        echo "Non supera € 77,47";
+                      } ?>
+                  </td>
+                <?php } ?>
                 <!-- custom-valentino-end -->
 
                 <td class="amount <?php if ($invoice->invoice_sign == '-1') {

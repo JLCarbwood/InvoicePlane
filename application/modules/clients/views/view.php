@@ -356,6 +356,8 @@ foreach ($custom_fields as $custom_field) {
         </div>
 
         <div id="clientInvoices" class="tab-pane table-content">
+            <?php global $marca_da_bollo;
+            $marca_da_bollo = false; ?>
             <?php echo $invoice_table; ?>
         </div>
 
