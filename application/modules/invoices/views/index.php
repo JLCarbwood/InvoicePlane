@@ -88,8 +88,10 @@
 
 <div id="content" class="table-content">
     <div id="filter_results">
+        <!-- custom-valentino-start -->
         <?php global $marca_da_bollo;
         $marca_da_bollo = true; ?>
+        <!-- custom-valentino-end -->
         <?php $this->layout->load_view('invoices/partial_invoice_table', array('invoices' => $invoices)); ?>
     </div>
 </div>

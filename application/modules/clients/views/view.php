@@ -356,8 +356,10 @@ foreach ($custom_fields as $custom_field) {
         </div>
 
         <div id="clientInvoices" class="tab-pane table-content">
+            <!-- custom-valentino-start -->
             <?php global $marca_da_bollo;
             $marca_da_bollo = false; ?>
+            <!-- custom-valentino-end -->
             <?php echo $invoice_table; ?>
         </div>
 
