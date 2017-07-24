@@ -80,7 +80,7 @@
                     'invoice' => $CI->mdl_custom_fields->get_values_for_fields('mdl_invoice_custom', $invoice->invoice_id),
                   ); ?>
                   <td>
-                      <?php if($custom_fields['invoice']['ID marca da bollo']) {
+                      <?php if($custom_fields['invoice'] && $custom_fields['invoice']['ID marca da bollo']) {
                         echo nl2br($custom_fields['invoice']['ID marca da bollo']);
                       } else {
                         echo "Non supera € 77,47";
