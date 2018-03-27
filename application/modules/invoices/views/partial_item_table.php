@@ -17,7 +17,15 @@
 
         <tbody id="new_row" style="display: none;">
         <tr>
-            <td rowspan="2" class="td-icon"><i class="fa fa-arrows cursor-move"></i></td>
+            <td rowspan="2" class="td-icon">
+                <i class="fa fa-arrows cursor-move"></i>
+                <?php if ($invoice->invoice_is_recurring) : ?>
+                    <br/>
+                    <i title="<?php echo trans('recurring') ?>"
+                       class="js-item-recurrence-toggler cursor-pointer fa fa-calendar-o text-muted"></i>
+                    <input type="hidden" name="item_is_recurring" value=""/>
+                <?php endif; ?>
+            </td>
             <td class="td-text">
                 <input type="hidden" name="invoice_id" value="<?php echo $invoice_id; ?>">
                 <input type="hidden" name="item_id" value="">
@@ -63,7 +71,11 @@
                     </select>
                 </div>
             </td>
-            <td class="td-icon text-right td-vert-middle"></td>
+            <td class="td-icon text-right td-vert-middle">
+                <button type="button" class="btn_delete_item btn btn-link btn-sm" title="<?php _trans('delete'); ?>">
+                    <i class="fa fa-trash-o text-danger"></i>
+                </button>
+            </td>
         </tr>
         <tr>
             <?php if ($invoice->sumex_id == ""): ?>
@@ -120,7 +132,25 @@
         <?php foreach ($items as $item) { ?>
             <tbody class="item">
             <tr>
-                <td rowspan="2" class="td-icon"><i class="fa fa-arrows cursor-move"></i></td>
+                <td rowspan="2" class="td-icon">
+                    <i class="fa fa-arrows cursor-move"></i>
+                    <?php
+                    if ($invoice->invoice_is_recurring) :
+                        if ($item->item_is_recurring == 1 || is_null($item->item_is_recurring)) {
+                            $item_recurrence_state = '1';
+                            $item_recurrence_class = 'fa-calendar-check-o text-success';
+                        } else {
+                            $item_recurrence_state = '0';
+                            $item_recurrence_class = 'fa-calendar-o text-muted';
+                        }
+                        ?>
+                        <br/>
+                        <i title="<?php echo trans('recurring') ?>"
+                           class="js-item-recurrence-toggler cursor-pointer fa <?php echo $item_recurrence_class ?>"></i>
+                        <input type="hidden" name="item_is_recurring" value="<?php echo $item_recurrence_state ?>"/>
+                    <?php endif; ?>
+                </td>
+
                 <td class="td-text">
                     <input type="hidden" name="invoice_id" value="<?php echo $invoice_id; ?>">
                     <input type="hidden" name="item_id" value="<?php echo $item->item_id; ?>"
@@ -193,10 +223,10 @@
                 </td>
                 <td class="td-icon text-right td-vert-middle">
                     <?php if ($invoice->is_read_only != 1): ?>
-                        <a href="<?php echo site_url('invoices/delete_item/' . $invoice->invoice_id . '/' . $item->item_id); ?>"
-                           title="<?php _trans('delete'); ?>">
+                        <button type="button" class="btn_delete_item btn btn-link btn-sm" title="<?php _trans('delete'); ?>"
+                                data-item-id="<?php echo $item->item_id; ?>">
                             <i class="fa fa-trash-o text-danger"></i>
-                        </a>
+                        </button>
                     <?php endif; ?>
                 </td>
             </tr>
@@ -309,13 +339,20 @@
                 <td>
                     <?php if ($invoice_tax_rates) {
                         foreach ($invoice_tax_rates as $invoice_tax_rate) { ?>
-                            <span class="text-muted">
-                            <?php echo anchor('invoices/delete_invoice_tax/' . $invoice->invoice_id . '/' . $invoice_tax_rate->invoice_tax_rate_id, '<i class="fa fa-trash-o"></i>');
-                            echo ' ' . htmlsc($invoice_tax_rate->invoice_tax_rate_name) . ' ' . format_amount($invoice_tax_rate->invoice_tax_rate_percent); ?>
-                                %</span>&nbsp;
-                            <span class="amount">
-                                <?php echo format_currency($invoice_tax_rate->invoice_tax_rate_amount); ?>
-                            </span>
+                            <form method="post"
+                                action="<?php echo site_url('invoices/delete_invoice_tax/' . $invoice->invoice_id . '/' . $invoice_tax_rate->invoice_tax_rate_id) ?>">
+                                <?php _csrf_field(); ?>
+                                <span class="amount">
+                                    <?php echo format_currency($invoice_tax_rate->invoice_tax_rate_amount); ?>
+                                </span>
+                                <span class="text-muted">
+                                    <?php echo htmlsc($invoice_tax_rate->invoice_tax_rate_name) . ' ' . format_amount($invoice_tax_rate->invoice_tax_rate_percent) ?>
+                                </span>
+                                <button type="submit" class="btn btn-xs btn-link"
+                                        onclick="return confirm('<?php _trans('delete_tax_warning'); ?>');">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </form>
                         <?php }
                     } else {
                         echo format_currency('0');

@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * InvoicePlane
  *
  * @author		InvoicePlane Developers & Contributors
- * @copyright	Copyright (c) 2012 - 2017 InvoicePlane.com
+ * @copyright	Copyright (c) 2012 - 2018 InvoicePlane.com
  * @license		https://invoiceplane.com/license.txt
  * @link		https://invoiceplane.com
  */
@@ -18,7 +18,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * @param $model_id
  * @return mixed
  */
-function parse_template($object, $body, $model_id)
+function parse_template($object, $body)
 {
     if (preg_match_all('/{{{([^{|}]*)}}}/', $body, $template_vars)) {
         foreach ($template_vars[1] as $var) {
@@ -65,7 +65,7 @@ function parse_template($object, $body, $model_id)
                             // Get the values for the custom field
                             $cf_model = str_replace('ip_', 'mdl_', $cf->custom_field_table);
                             $replace = $CI->mdl_custom_fields
-                                ->get_value_for_field($cf_id[1], $cf_model, $model_id);
+                                ->get_value_for_field($cf_id[1], $cf_model, $object);
                         } else {
                             $replace = '';
                         }

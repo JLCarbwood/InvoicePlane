@@ -7,6 +7,7 @@ $(".client-id-select").select2({
         data: function (params) {
             return {
                 query: params.term,
+                permissive_search_clients: $('input#input_permissive_search_clients').val(),
                 page: params.page,
                 _ip_csrf: Cookies.get('ip_csrf_cookie')
             };
@@ -19,8 +20,5 @@ $(".client-id-select").select2({
         },
         cache: true
     },
-    escapeMarkup: function (markup) {
-        return markup;
-    },
-    minimumInputLength: 2
+    minimumInputLength: 1
 });

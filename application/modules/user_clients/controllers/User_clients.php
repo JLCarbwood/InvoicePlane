@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * InvoicePlane
  *
  * @author		InvoicePlane Developers & Contributors
- * @copyright	Copyright (c) 2012 - 2017 InvoicePlane.com
+ * @copyright	Copyright (c) 2012 - 2018 InvoicePlane.com
  * @license		https://invoiceplane.com/license.txt
  * @link		https://invoiceplane.com
  */
@@ -70,7 +70,27 @@ class User_Clients extends Admin_Controller
         }
 
         if ($this->mdl_user_clients->run_validation()) {
-            $this->mdl_user_clients->save();
+            
+            if ($this->input->post('user_all_clients')) {
+                $users_id = array($user_id);
+                
+                $this->mdl_user_clients->set_all_clients_user($users_id);
+                
+                $user_update = array(
+                    'user_all_clients' => 1
+                );
+                
+            } else {
+                $user_update = array(
+                    'user_all_clients' => 0
+                );
+                
+               $this->mdl_user_clients->save(); 
+            }
+            
+            $this->db->where('user_id',$user_id);
+            $this->db->update('ip_users',$user_update);
+            
             redirect('user_clients/user/' . $user_id);
         }
 

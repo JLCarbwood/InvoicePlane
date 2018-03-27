@@ -10,5 +10,5 @@ All the customizations in the code are wrapped between `custom-valentino-start` 
 4. Test a lot the new version and correct bugs, if there are.
 5. Make a diff between the new custom version and the new IP version, if there are temp files that have not to be uploaded in the new release, delete them (usually found in the following folders `/application/logs`, `/uploads/archive` and `/vendor/mpdf/mpdf/tmp/ttfontdata`).
 6. Delete all `.DS_Store` files from the new custom version.
-7. Make a zip of the new custom version without these files and folders in the root: `.htaccess`, `ipconfig.php`, `.git`.
-8. Release the new version and apply it in the production environment.
+7. Make a zip named `InvoicePlane-X.X.X.Y` (replace `X` with the new IP version and `Y` with the number of the custom build) of the new custom version without these files and folders in the root: `.htaccess`, `ipconfig.php`, `.git`.
+8. Push and release the new version and apply it in the production environment.

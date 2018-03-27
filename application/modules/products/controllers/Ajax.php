@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * InvoicePlane
  *
  * @author		InvoicePlane Developers & Contributors
- * @copyright	Copyright (c) 2012 - 2017 InvoicePlane.com
+ * @copyright	Copyright (c) 2012 - 2018 InvoicePlane.com
  * @license		https://invoiceplane.com/license.txt
  * @link		https://invoiceplane.com
  */
@@ -37,11 +37,15 @@ class Ajax extends Admin_Controller
         $products = $this->mdl_products->get()->result();
         $families = $this->mdl_families->get()->result();
 
+        $default_item_tax_rate = get_setting('default_item_tax_rate');
+        $default_item_tax_rate = $default_item_tax_rate !== '' ?: 0;
+
         $data = array(
             'products' => $products,
             'families' => $families,
             'filter_product' => $filter_product,
             'filter_family' => $filter_family,
+            'default_item_tax_rate' => $default_item_tax_rate,
         );
 
         if ($filter_product || $filter_family || $reset_table) {

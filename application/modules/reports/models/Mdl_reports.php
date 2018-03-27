@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * InvoicePlane
  *
  * @author		InvoicePlane Developers & Contributors
- * @copyright	Copyright (c) 2012 - 2017 InvoicePlane.com
+ * @copyright	Copyright (c) 2012 - 2018 InvoicePlane.com
  * @license		https://invoiceplane.com/license.txt
  * @link		https://invoiceplane.com
  */
@@ -195,8 +195,13 @@ class Mdl_Reports extends CI_Model
      * @param bool $taxChecked
      * @return mixed
      */
-    public function sales_by_year($from_date = null, $to_date = null, $minQuantity = null, $maxQuantity = null, $taxChecked = False)
-    {
+    public function sales_by_year(
+        $from_date = null,
+        $to_date = null,
+        $minQuantity = null,
+        $maxQuantity = null,
+        $taxChecked = false
+    ) {
         if ($minQuantity == "") {
             $minQuantity = 0;
         }

@@ -1,4 +1,4 @@
-<!doctype html lang="<?php _trans('cldr'); ?>">
+<!DOCTYPE html>
 
 <!--[if lt IE 7]>
 <html class="no-js ie6 oldie" lang="<?php _trans('cldr'); ?>"> <![endif]-->
@@ -10,12 +10,10 @@
 <html class="no-js" lang="<?php _trans('cldr'); ?>"> <!--<![endif]-->
 
 <head>
-
     <?php
     // Get the page head content
     $this->layout->load_view('layout/includes/head');
     ?>
-
 </head>
 <body class="<?php echo get_setting('disable_sidebar') ? 'hidden-sidebar' : ''; ?>">
 
@@ -26,7 +24,6 @@
 <?php
 // Get the navigation bar
 $this->layout->load_view('layout/includes/navbar');
-
 ?>
 
 <div id="main-area">

@@ -1,6 +1,7 @@
 <form method="post">
 
-    <input type="hidden" name="_ip_csrf" value="<?= $this->security->get_csrf_hash() ?>">
+    <input type="hidden" name="<?php echo $this->config->item('csrf_token_name'); ?>"
+           value="<?php echo $this->security->get_csrf_hash() ?>">
 
     <div id="headerbar">
         <h1 class="headerbar-title"><?php _trans('custom_values'); ?></h1>
@@ -72,10 +73,14 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="<?php echo site_url('custom_values/delete/' . $element->custom_values_id); ?>"
-                                                   onclick="return confirm('<?php _trans('delete_record_warning'); ?>');">
-                                                    <i class="fa fa-trash-o fa-margin"></i> <?php _trans('delete'); ?>
-                                                </a>
+                                                <form action="<?php echo site_url('custom_values/delete/' . $element->custom_values_id); ?>"
+                                                      method="POST">
+                                                    <?php _csrf_field(); ?>
+                                                    <button type="submit" class="dropdown-button"
+                                                            onclick="return confirm('<?php _trans('delete_record_warning'); ?>');">
+                                                        <i class="fa fa-trash-o fa-margin"></i> <?php _trans('delete'); ?>
+                                                    </button>
+                                                </form>
                                             </li>
                                         </ul>
                                     </div>

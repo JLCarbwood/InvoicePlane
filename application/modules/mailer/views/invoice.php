@@ -21,7 +21,8 @@
 </script>
 
 <form method="post" action="<?php echo site_url('mailer/send_invoice/' . $invoice->invoice_id) ?>">
-    <input type="hidden" name="_ip_csrf" value="<?= $this->security->get_csrf_hash() ?>">
+    <input type="hidden" name="<?php echo $this->config->item('csrf_token_name'); ?>"
+           value="<?php echo $this->security->get_csrf_hash() ?>">
 
     <div id="headerbar">
         <h1 class="headerbar-title"><?php _trans('email_invoice'); ?></h1>
@@ -49,7 +50,7 @@
 
                 <div class="form-group">
                     <label for="to_email"><?php _trans('to_email'); ?></label>
-                    <input type="email" name="to_email" id="to_email" class="form-control" required
+                    <input type="email" multiple name="to_email" id="to_email" class="form-control" required
                            value="<?php echo $invoice->client_email; ?>">
                 </div>
 

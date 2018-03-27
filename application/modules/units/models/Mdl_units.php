@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * InvoicePlane
  *
  * @author		InvoicePlane Developers & Contributors
- * @copyright	Copyright (c) 2012 - 2017 InvoicePlane.com
+ * @copyright	Copyright (c) 2012 - 2018 InvoicePlane.com
  * @license		https://invoiceplane.com/license.txt
  * @link		https://invoiceplane.com
  */
@@ -42,10 +42,11 @@ class Mdl_Units extends Response_Model
             $units = $this->get()->result();
             foreach ($units as $unit) {
                 if ($unit->unit_id == $unit_id) {
-                    if ($quantity > 1)
+                    if ($quantity > 1) {
                         return $unit->unit_name_plrl;
-                    else
+                    } else {
                         return $unit->unit_name;
+                    }
                 }
             }
         }

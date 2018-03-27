@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * InvoicePlane
  *
  * @author		InvoicePlane Developers & Contributors
- * @copyright	Copyright (c) 2012 - 2017 InvoicePlane.com
+ * @copyright	Copyright (c) 2012 - 2018 InvoicePlane.com
  * @license		https://invoiceplane.com/license.txt
  * @link		https://invoiceplane.com
  */
@@ -108,7 +108,7 @@ class Mdl_Custom_Values extends MY_Model
     }
 
     /**
-     * @param $column
+     * @param $id
      * @return $this
      */
     public function get_by_column($id)
@@ -127,7 +127,17 @@ class Mdl_Custom_Values extends MY_Model
     }
 
     /**
-     * @param $column
+     * @param $ids
+     * @return mixed
+     */
+    public function get_by_ids($ids)
+    {
+        $ids = is_array($ids) ? $ids : explode(',', $ids);
+        return $this->where_in('custom_values_id', $ids)->get();
+    }
+
+    /**
+     * @param $fid
      * @param $id
      * @return bool
      */

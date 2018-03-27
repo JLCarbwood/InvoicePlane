@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * InvoicePlane
  *
  * @author		InvoicePlane Developers & Contributors
- * @copyright	Copyright (c) 2012 - 2017 InvoicePlane.com
+ * @copyright	Copyright (c) 2012 - 2018 InvoicePlane.com
  * @license		https://invoiceplane.com/license.txt
  * @link		https://invoiceplane.com
  */
@@ -21,15 +21,21 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * @param null $more_attachments
  * @return bool
  */
-function phpmail_send($from, $to, $subject, $message, $attachment_path = null, $cc = null, $bcc = null, $more_attachments = null)
-{
-    require_once(FCPATH . 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php');
-
+function phpmail_send(
+    $from,
+    $to,
+    $subject,
+    $message,
+    $attachment_path = null,
+    $cc = null,
+    $bcc = null,
+    $more_attachments = null
+) {
     $CI = &get_instance();
     $CI->load->library('crypt');
 
     // Create the basic mailer object
-    $mail = new PHPMailer();
+    $mail = new \PHPMailer\PHPMailer\PHPMailer();
     $mail->CharSet = 'UTF-8';
     $mail->isHTML();
 
@@ -79,7 +85,7 @@ function phpmail_send($from, $to, $subject, $message, $attachment_path = null, $
 
     $mail->Subject = $subject;
     $mail->Body = $message;
-
+    $mail->AltBody = $mail->normalizeBreaks($mail->html2text($message));
 
     if (is_array($from)) {
         // This array should be address, name
