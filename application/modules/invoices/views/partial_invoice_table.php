@@ -74,18 +74,22 @@
 
                 <!-- custom-valentino-start -->
                 <?php if ($marca_da_bollo) {
-                  $CI = &get_instance();
-                  $CI->load->model('custom_fields/mdl_custom_fields');
-                  $custom_fields = array(
-                    'invoice' => $CI->mdl_custom_fields->get_values_for_fields('mdl_invoice_custom', $invoice->invoice_id),
-                  ); ?>
-                  <td>
-                      <?php if($custom_fields['invoice'] && $custom_fields['invoice']['ID marca da bollo']) {
-                        echo nl2br($custom_fields['invoice']['ID marca da bollo']);
-                      } else {
-                        echo "Non supera € 77,47";
-                      } ?>
-                  </td>
+                    $CI = &get_instance();
+                    $CI->load->model('custom_fields/mdl_custom_fields');
+                    $custom_fields = array(
+                        'invoice' => $CI->mdl_custom_fields->get_values_for_fields('mdl_invoice_custom', $invoice->invoice_id),
+                    ); ?>
+                    <td>
+                        <?php if ($custom_fields['invoice'] && $custom_fields['invoice']['ID marca da bollo'] && $invoice->invoice_total > 77.47) {
+                            echo nl2br($custom_fields['invoice']['ID marca da bollo']);
+                        } else {
+                            if ($invoice->invoice_total > 77.47) {
+                                echo "ERRORE: Campo &ldquo;ID marca da bollo&rdquo; vuoto";
+                            } else {
+                                echo "Non necessaria (totale inferiore a €77,47)";
+                            }
+                        } ?>
+                    </td>
                 <?php } ?>
                 <!-- custom-valentino-end -->
 

@@ -222,9 +222,13 @@
                 <?php if ($invoice->invoice_terms) { echo nl2br($invoice->invoice_terms); } ?>
             </div>
             <div id="invoice-bollo" style="font-family: 'source-sans-pro-light'; font-weight: normal; font-size: 9px;">
-                <?php if ($custom_fields['invoice']['ID marca da bollo']): ?>
-                  Imposta di bollo assolta sull’originale.<br>
-                  <?php echo nl2br($custom_fields['invoice']['ID marca da bollo']); ?>
+                <?php if ($invoice->invoice_total > 77.47): ?>
+                    Imposta di bollo assolta sull’originale.<br>
+                    <?php if ($custom_fields['invoice']['ID marca da bollo']): ?>
+                        <?php echo nl2br($custom_fields['invoice']['ID marca da bollo']); ?>
+                    <?php else: ?>
+                        <span style="font-family: 'source-sans-pro-regular'; font-weight: normal; color: #e74c3c;">ERRORE ID MARCA DA BOLLO</span>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
             <div id="company-info" style="text-align: center; font-family: 'source-sans-pro-regular'; font-weight: normal; font-size: 12px; margin-top: 80px;">
